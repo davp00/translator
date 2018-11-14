@@ -6,7 +6,9 @@ class English(Languaje):
         super().__init__()
         self.words = {
             'article': {
-                'the'
+                'the',
+                'a',
+                'an'
             },
 
             'verb': {
@@ -17,18 +19,27 @@ class English(Languaje):
                     'earn',
                     'ignored',
                     'join',
-                    'call'
+                    'call',
+                    'work'
                 },
                 'irregular': {
                     'be',
                     'begin',
-                    'bite',
-                    'break',
+                    'can',
                     'buy',
                     'run',
                     'go',
                     'know',
                     'see'
+                },
+                'past_irregular': {
+                    'began',
+                    'bought',
+                    'ran',
+                    'could',
+                    'went',
+                    'knew',
+                    'saw'
                 }
             },
 
@@ -85,16 +96,28 @@ class English(Languaje):
                     'slowly',
                     'quickly'
                 }
+            },
+
+            'connector': {
+                'and',
+                'also',
+                'too'
             }
         }
 
     def get_grammar(self):
+        # VERBOS
         regular_verbs = self.parse_obj(self.words['verb'].get('regular'))
         irregular_verbs = self.parse_obj(self.words['verb'].get('irregular'))
+        past_irregulars = self.parse_obj(self.words['verb'].get('past_irregular'))
         verbs = regular_verbs + "| " + irregular_verbs
+
+        # BASICS
         articles = self.parse_key('article')
         nouns = self.parse_key('noun')
         adjetives = self.parse_key('adjective')
+        connector = self.parse_key('connector')
+
         # PRONOMBRES
         pro_f = self.parse_obj(self.words['pronoun'].get('first'))
         pro_s = self.parse_obj(self.words['pronoun'].get('second'))
@@ -113,8 +136,10 @@ class English(Languaje):
             | tp_present_simple_af              -> presente_simple_tercera_persona_afirmativo
             | tp_present_simple_ne              -> presente_simple_tercera_persona_negativo
             | tp_present_simple_interrogative   -> presente_simple_tercera_persona_interrogativo
+            | simple_past_positive              -> pasado_simple_positivo
             | article                           -> articulo
             | verb                              -> verbo
+            | past_verb                         -> verbo_pasasdo
             | tp_verb                           -> verbo_tercera_persona
             | noun                              -> sustantivo
             | pro_f_s                           -> pronombre_primera_o_segunda_persona
@@ -142,9 +167,16 @@ class English(Languaje):
                 tp_present_simple_interrogative: af_tp_auxverb pro_third verb sym_interrogative
             ///
             
+            /// PASADO SIMPLE
+                simple_past_positive: pro_f_s past_verb
+                                    | pro_third past_verb
+            //
+            
+            
             // BASICS
                 article: ARTICLE
                 verb: VERB
+                connector: CONNECTOR
                 noun: NOUN
                 popper_noun: POPPER_NOUN
                 adj: ADJ
@@ -154,10 +186,16 @@ class English(Languaje):
                 pro_s: PRONOUN_S
                 pro_third: PRONOUN_THIRD
                 pro_plural: PRONOUN_PLURAL
-                to_be_f: TO_BE_F
-                to_be_s: TO_BE_S
-                to_be_t: TO_BE_T
-                to_be_plural: TO_BE_PLU
+                
+                /// VERBO TO BE
+                    to_be_f: TO_BE_F
+                    to_be_s: TO_BE_S
+                    to_be_t: TO_BE_T
+                    pa_to_be_f_t: PA_TO_BE_F_T
+                    pa_to_be: PA_TO_BE
+                    to_be_plural: TO_BE_PLU
+                //
+                
                 adv_freq: ADV_FREQUENCY
             ///
             
@@ -174,9 +212,17 @@ class English(Languaje):
                 ne_tp_auxverb: NE_TP_AUXVERB
             //
             
+            /// DERIVADOS VERBOS
+                past_verb: REGULAR_VERB + "d" | REGULAR_VERB + "ed" | IRREGULAR_VERB_PAST
+            //
+            
             OBJECT: NOUN
             ARTICLE: {}
+            CONNECTOR: {}
             VERB: {}
+            REGULAR_VERB: {}
+            IRREGULAR_VERB: {}
+            IRREGULAR_VERB_PAST: {}
             NOUN: {}
             ADJ: {}
             POPPER_NOUN: WORD
@@ -191,6 +237,8 @@ class English(Languaje):
             TO_BE_F: "am"
             TO_BE_S: "are"
             TO_BE_T: "is"
+            PA_TO_BE_F_T: "was"
+            PA_TO_BE: "were" 
             
             TO_BE_PLU: TO_BE_S
             
@@ -210,7 +258,13 @@ class English(Languaje):
         """.format(
             # BASICS
             articles,
+            connector,
+            # VERBS
             verbs,
+            regular_verbs,
+            irregular_verbs,
+            past_irregulars,
+            # END_VERBS
             nouns,
             adjetives,
             # PRONOMBRES
