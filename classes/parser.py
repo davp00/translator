@@ -63,3 +63,21 @@ class TreeParser(InlineTransformer):
 
     def pro_plural(self, item):
         tokens.append(Token('pro_plural', item))
+
+    def to_be_f(self, item):
+        tokens.append(Token('to_be_f', item))
+
+    def to_be_s(self, item):
+        tokens.append(Token('to_be_s', item))
+
+    def to_be_t(self, item):
+        tokens.append(Token('to_be_t', item))
+
+    def pa_to_be_f_t(self, item):
+        tokens.append(Token('pa_to_be_f_t', item))
+
+    def pa_to_be(self, item):
+        tokens.append(Token('pa_to_be', item))
+
+    def to_be_plural(self, item):
+        tokens.append(Token('to_be_plural', item))
