@@ -148,7 +148,7 @@ class English(Languaje):
             | tp_present_simple_interrogative   -> presente_simple_tercera_persona_interrogativo
             | simple_past_positive              -> pasado_simple_positivo
             | article                           -> articulo
-            | verb                              -> verbo
+            | literal_verb                      -> verbo
             | past_verb                         -> verbo_pasasdo
             | tp_verb                           -> verbo_tercera_persona
             | noun                              -> sustantivo
@@ -178,13 +178,14 @@ class English(Languaje):
             ///
             
             /// PASADO SIMPLE
-                simple_past_positive: pro_f_s past_verb
+                simple_past_positive: pro_f_s (adv_freq)? past_verb
             //
             
             
             // BASICS
                 article: ARTICLE
                 verb: VERB
+                literal_verb: VERB
                 connector: CONNECTOR
                 noun: NOUN
                 popper_noun: POPPER_NOUN

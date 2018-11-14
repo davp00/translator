@@ -3,9 +3,14 @@ translation = {
 
     'the': {
         'literal': 'el',
-        'context': {
-            'article': 'el'
-        }
+    },
+
+    'a': {
+        'literal': 'un'
+    },
+
+    'an': {
+        'literal': 'una'
     },
 
     # VERBOS
@@ -13,26 +18,29 @@ translation = {
     'talk': {
         'literal': 'hablar',
         'context': {
-            'verbo': 'hablo',
+            'verb': 'hablo',
             'tp_verb': 'habla',
             'past_verb': 'hablé'
+        }
+    },
+
+    'work': {
+        'literal': 'trabajar',
+        'context': {
+            'verb': 'trabajo',
+            'tp_verb': 'trabaja',
+            'past_verb': 'trabajé'
         }
     },
 
     # NOUNS
     'car': {
         'literal': 'carro',
-        'context': {
-
-        }
     },
 
     # PRONOMBRES
     'i': {
         'literal': 'yo',
-        'context': {
-
-        }
     },
 
     'he': {
@@ -50,6 +58,24 @@ translation = {
     # ADJETIVES
     'blue': {
         'literal': 'azul',
+    },
+
+    # PREPOSICIONES
+    'in': {
+        'literal': 'en'
+    },
+
+    'on': {
+        'literal': 'en'
+    },
+
+    'at': {
+        'literal': 'en'
+    },
+
+    # ADVERBIOS
+    'always': {
+        'literal': 'siempre'
     }
 }
 

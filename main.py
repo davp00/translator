@@ -3,7 +3,7 @@ from classes.translator import Translator
 
 parser = Parser('en')
 
-sentence = parser.parse_text('he talks')
+sentence = parser.parse_text('i always worked')
 
 sentence = sentence.replace('_', ' ')
 print(sentence)
@@ -11,4 +11,4 @@ print(sentence)
 translator = Translator('en_es')
 result = translator.translate(tokens)
 
-print(result)
+print("traducción: " + result)

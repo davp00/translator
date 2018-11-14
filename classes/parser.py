@@ -25,6 +25,9 @@ class TreeParser(InlineTransformer):
     def verb(self, item):
         tokens.append(Token('verb', item))
 
+    def literal_verb(self, item):
+        tokens.append(Token('', item))
+
     def past_verb(self, item):
         tokens.append(Token('past_verb', item))
 
@@ -81,3 +84,9 @@ class TreeParser(InlineTransformer):
 
     def to_be_plural(self, item):
         tokens.append(Token('to_be_plural', item))
+
+    def preposition(self, item):
+        tokens.append(Token('', item))
+
+    def adv_freq(self, item):
+        tokens.append(Token('', item))
