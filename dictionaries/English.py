@@ -59,19 +59,60 @@ class English(Languaje):
         pro_third = self.parse_obj(self.words['pronoun'].get('third'))
 
         self.grammar = """
-            sentence: pro_third 
-            | present_simple_afirmative
-            
-            present_simple_afirmative: noun verb
-            
-            article: ARTICLE
-            verb: VERB
-            noun: NOUN
-            popper_noun: POPPER_NOUN
-            pro_f_s: PRONOUN_F_S
-            pro_third: PRONOUN_THIRD
-            adj: ADJ
         
+            sentence: present_simple_af         -> presente_simple_afirmativo
+            | present_simple_ne                 -> presente_simple_negativo
+            | present_simple_interrogative      -> presente_simple_interrogativo
+            | tp_present_simple_af              -> presente_simple_tercera_persona_afirmativo
+            | tp_present_simple_ne              -> presente_simple_tercera_persona_negativo
+            | tp_present_simple_interrogative   -> presente_simple_tercera_persona_interrogativo
+            | article                           -> articulo
+            | verb                              -> verbo
+            | tp_verb                           -> verbo_tercera_persona
+            | noun                              -> sustantivo
+            | pro_f_s                           -> pronombre_primera_o_segunda_persona
+            | pro_third                         -> pronombre_tercera_persona
+            | adj                               -> adjetivo
+            
+            // Primera o segunda persona
+                present_simple_af: pro_f_s verb
+                present_simple_ne: pro_f_s ne_fs_auxverb verb
+                
+                present_simple_interrogative: af_fs_auxverb pro_f_s verb sym_interrogative
+            ///
+            
+            // Tercera persona
+                tp_present_simple_af: pro_third tp_verb
+                tp_present_simple_ne: pro_third ne_tp_auxverb verb
+                
+                tp_present_simple_interrogative: af_tp_auxverb pro_third verb sym_interrogative
+            ///
+            
+            // BASICS
+                article: ARTICLE
+                verb: VERB
+                noun: NOUN
+                popper_noun: POPPER_NOUN
+                adj: ADJ
+                object: NOUN | POPPER_NOUN
+                sym_interrogative: SYMBOL_INTERROGATIVE
+            ///
+            
+            /// DERIVADOS PRIMERA/SEGUNDA PERSONA
+                pro_f_s: PRONOUN_F_S
+                pro_third: PRONOUN_THIRD
+                
+                af_fs_auxverb: AF_FS_AUXVERB
+                ne_fs_auxverb: NE_FS_AUXVERB
+            //
+            
+            /// DERIVADOS TERCERA PERSONA
+                tp_verb: VERB + "s"
+                af_tp_auxverb: AF_TP_AUXVERB
+                ne_tp_auxverb: NE_TP_AUXVERB
+            //
+            
+            OBJECT: NOUN
             ARTICLE: {}
             VERB: {}
             NOUN: {}
@@ -79,6 +120,15 @@ class English(Languaje):
             POPPER_NOUN: WORD
             PRONOUN_F_S: {}
             PRONOUN_THIRD: {}
+            
+            // AUXILIARES 
+                AF_FS_AUXVERB: "do"
+                NE_FS_AUXVERB: "dont"
+                
+                AF_TP_AUXVERB: "does"
+                NE_TP_AUXVERB: "doesnt"
+            ///
+            SYMBOL_INTERROGATIVE: "?"
             
             %import common.WS
             %import common.WORD  
