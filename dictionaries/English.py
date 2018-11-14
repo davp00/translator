@@ -50,7 +50,8 @@ class English(Languaje):
                 'table',
                 'man',
                 'number',
-                'people'
+                'people',
+                'vegetables'
             },
 
             'adjective': {
@@ -102,6 +103,14 @@ class English(Languaje):
                 'and',
                 'also',
                 'too'
+            },
+
+            'preposition': {
+                'in',
+                'on',
+                'at',
+                'after',
+                'into',
             }
         }
 
@@ -117,6 +126,7 @@ class English(Languaje):
         nouns = self.parse_key('noun')
         adjetives = self.parse_key('adjective')
         connector = self.parse_key('connector')
+        prepositions = self.parse_key('preposition')
 
         # PRONOMBRES
         pro_f = self.parse_obj(self.words['pronoun'].get('first'))
@@ -159,7 +169,7 @@ class English(Languaje):
             ///
             
             // PRESENTE SIMPLE Tercera persona
-                tp_present_simple_af: pro_third (adv_freq)? tp_verb
+                tp_present_simple_af: pro_third (adv_freq)? tp_verb 
                                     | pro_third to_be_t adj 
                                         
                 tp_present_simple_ne: pro_third ne_tp_auxverb verb
@@ -169,7 +179,6 @@ class English(Languaje):
             
             /// PASADO SIMPLE
                 simple_past_positive: pro_f_s past_verb
-                                    | pro_third past_verb
             //
             
             
@@ -197,6 +206,12 @@ class English(Languaje):
                 //
                 
                 adv_freq: ADV_FREQUENCY
+                
+                preposition: PREPOSITION
+                
+                /// FRASE BASICA
+                    oration: (preposition)? (article)? object
+                //
             ///
             
             /// DERIVADOS PRIMERA/SEGUNDA PERSONA
@@ -233,6 +248,8 @@ class English(Languaje):
             PRONOUN_PLURAL: {}
             
             ADV_FREQUENCY: {}
+            
+            PREPOSITION: {}
             
             TO_BE_F: "am"
             TO_BE_S: "are"
@@ -274,7 +291,9 @@ class English(Languaje):
             pro_third,
             pro_plural,
             # ADVERBIOS
-            adv_frequency
+            adv_frequency,
+            #
+            prepositions
             )
 
         return self.grammar
